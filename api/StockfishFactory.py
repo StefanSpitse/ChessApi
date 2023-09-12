@@ -5,7 +5,7 @@ class StockfishFactory:
     def __init__(self, path, elo, depth, amount):
         self.path = path  # Path to stockfish
         self.elo = elo  # At what elo rating the stockfish is playing (how strong he is)
-        self.depth = depth  # How many steps is stockfish thinking ahead (the higher the number the more cpu intesive
+        self.depth = depth  # How many steps is stockfish thinking ahead (the higher the number the more cpu intesive)
         self.amount = amount  # If the user wants a visualized board on request
         self.stockfish = Stockfish(path=self.path)  # Stockfish engine
 
@@ -19,4 +19,6 @@ class StockfishFactory:
     def GetBestMove(self):
         best = self.stockfish.get_best_move()
         self.stockfish.make_moves_from_current_position([best])
-        return self.stockfish.get_top_moves(self.amount)
+        output = self.stockfish.get_top_moves(self.amount)
+        output[0].update({"Best Move": True})
+        return output
